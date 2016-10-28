@@ -7,26 +7,36 @@ class MainController extends Controller
 {
 	public function home()
 	{
-		return $this->view('home');
+		$active['home'] = 1;
+
+		return $this->view('home', ['active'=>$active]);
 	}
 
 	public function about()
 	{
-		return $this->view('about');
+		$active['about'] = 1;
+
+		return $this->view('about', ['active'=>$active]);
 	}
 
 	public function contact()
 	{
-		return $this->view('contact');
+		$active['contact'] = 1;
+
+		return $this->view('contact', ['active'=>$active]);
 	}
 
 	public function gallery()
 	{
-		return $this->view('gallery');
+		$active['gallery'] = 1;
+
+		return $this->view('gallery', ['active'=>$active]);
 	}
 
 	public function single()
 	{
-		return $this->view('single');
+		$active['single'] = 1;
+
+		return $this->view('single', ['active'=>$active]);
 	}
 }
