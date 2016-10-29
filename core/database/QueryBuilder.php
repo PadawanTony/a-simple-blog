@@ -44,7 +44,7 @@ class QueryBuilder
     {
         $sql = sprintf(
             'insert into %s (%s) values (%s)',
-            $model->getTable(),
+	        $model::getTable(),
             implode(', ', array_keys($parameters)),
             ':'.implode(', :', array_keys($parameters))
         );
@@ -53,6 +53,6 @@ class QueryBuilder
 
         $statement->execute($parameters);
 
-        return $statement->fetchAll(PDO::FETCH_CLASS, $model);
+        return $statement->fetchAll(PDO::FETCH_CLASS, get_class($model));
     }
 }
