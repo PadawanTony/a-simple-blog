@@ -1,11 +1,12 @@
 <?php
 /**
- * @author Rizart Dokollari <r.dokollari@gmail.com>
+ * @author Antony Kalogeropoulos <anthonykalogeropoulos@gmail.com>
  * @since 10/23/16
  */
 
 namespace App\Models;
 
+use ReflectionClass;
 
 abstract class Model
 {
@@ -14,6 +15,10 @@ abstract class Model
      */
     public static function getTable()
     {
-        return strtolower(get_class(self::class).'s');
-    }
+	    $model = static::class;
+
+	    $reflect = new ReflectionClass($model);
+
+	    return strtolower($reflect->getShortName().'s');
+	}
 }

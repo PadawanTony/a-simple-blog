@@ -2,6 +2,8 @@
 namespace App\Controllers\Guest;
 
 use App\Controllers\Controller;
+use App\Models\Post;
+use Core\App;
 
 class MainController extends Controller
 {
@@ -9,7 +11,9 @@ class MainController extends Controller
 	{
 		$active['home'] = 1;
 
-		return $this->view('home', ['active'=>$active]);
+		$posts = App::get('database')->all(new Post);
+
+		return $this->view('home', ['active'=>$active, 'posts'=>$posts]);
 	}
 
 	public function about()

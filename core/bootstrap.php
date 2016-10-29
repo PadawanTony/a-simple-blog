@@ -1,5 +1,8 @@
 <?php
+use App\Models\Post;
 use Core\App;
+use Core\database\Connection;
+use Core\database\QueryBuilder;
 use Dotenv\Dotenv;
 
 //Customize Kint
@@ -25,9 +28,9 @@ if (file_exists($path . '/.env'))
 //Create configuration
 App::bind('config.app', require __DIR__ . '/config/app.php');
 App::bind('config.database', require __DIR__ . '/config/database.php');
-//App::bind('database', new QueryBuilder(
-//    Connection::make(App::get('config.database'))
-//));
+App::bind('database', new QueryBuilder(
+    Connection::make(App::get('config.database'))
+));
 
 // Initiate configuration
 date_default_timezone_set(App::get('config.app')['timezone']);

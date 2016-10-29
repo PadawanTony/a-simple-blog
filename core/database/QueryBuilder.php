@@ -6,6 +6,8 @@
 
 namespace Core\database;
 
+use App\Models\Post as Post;
+use Core\App;
 use PDO;
 use App\Models\Model;
 
@@ -16,22 +18,26 @@ class QueryBuilder
      */
     private $pdo;
 
-    /**
+	private $dbName;
+
+	/**
      * QueryBuilder constructor.
      * @param PDO $pdo
      */
     public function __construct(PDO $pdo)
     {
         $this->pdo = $pdo;
+
+	    $this->dbName = App::get('config.database')['mysql']['name'];
     }
 
     public function all(Model $model)
     {
-        $statement = $this->pdo->prepare("select * from {$model->getTable()}");
+        $statement = $this->pdo->prepare("select * from {$this->dbName}.{$model::getTable()}");
 
         $statement->execute();
 
-        return $statement->fetchAll(PDO::FETCH_CLASS, $model);
+	    return $statement->fetchAll(PDO::FETCH_CLASS, get_class($model));
     }
 
     public function insert(Model $model, $parameters)
