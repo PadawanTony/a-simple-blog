@@ -42,8 +42,6 @@ class Router
         foreach (static::$routes[$method] as $key=>$value) {
             if (preg_match("#^$key$#", $uri))
             {
-//                d($key);
-//                d($value);
                 return static::callAction( ...explode('@', $value) );
             }
         }

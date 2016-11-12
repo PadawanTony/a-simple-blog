@@ -4,6 +4,7 @@ namespace App\Controllers\Guest;
 use App\Controllers\Controller;
 use App\Models\Post;
 use Core\App;
+use Core\Request;
 
 class MainController extends Controller
 {
@@ -46,6 +47,18 @@ class MainController extends Controller
 
     public function showPost ()
     {
-        ddd('In the showPost!');
+        // Get postID from URL
+        $uriParts = explode('/', Request::uri());
+        $postId = end($uriParts);
+
+        // Get object from DB
+        $post = App::get('database')->all(new Post, ['*'], ['id'=>$postId]);
+
+        // Transform object to array
+        $post = get_object_vars(current($post));
+
+        $active['single'] = 1;
+
+        return $this->view('single', ['active'=>$active, 'post'=>$post]);
 	}
 }

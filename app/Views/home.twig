@@ -52,7 +52,7 @@
                             <a href="/post/{{ post.id }}"><img src="/images/{{ post.photo }}" alt="" /></a>
                             <h6>Find The Most</h6>
                             <h3><a href="/post/{{ post.id }}">{{ post.title }}</a></h3>
-                            <p>Vivamus interdum diam diam, non faucibus tortor consequat vitae. Proin sit amet augue sed massa pellentesque viverra. Suspendisse iaculis purus eget est pretium aliquam ut sed diam.</p>
+                            <p>{{ post.summary }}</p>
                             <label>{{ post.created_at | date("F d, Y") }}</label>
                         </div>
                     {% endfor %}
