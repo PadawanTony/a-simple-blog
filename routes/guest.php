@@ -9,3 +9,4 @@ Router::get('about', 'Guest/MainController@about');
 Router::get('single', 'Guest/MainController@single');
 Router::get('contact', 'Guest/MainController@contact');
 Router::get('gallery', 'Guest/MainController@gallery');
+Router::get('post/[\w\d\-]+', 'Guest/MainController@showPost');

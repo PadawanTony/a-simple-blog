@@ -43,4 +43,9 @@ class MainController extends Controller
 
 		return $this->view('single', ['active'=>$active]);
 	}
+
+    public function showPost ()
+    {
+        ddd('In the showPost!');
+	}
 }

@@ -39,10 +39,13 @@ class Router
 
     public static function direct($uri, $method)
     {
-        if (array_key_exists($uri, static::$routes[$method])) {
-            return static::callAction(
-                ...explode('@', static::$routes[$method][$uri])
-            );
+        foreach (static::$routes[$method] as $key=>$value) {
+            if (preg_match("#^$key$#", $uri))
+            {
+//                d($key);
+//                d($value);
+                return static::callAction( ...explode('@', $value) );
+            }
         }
 
         throw new HttpNotFoundException;
@@ -64,6 +67,8 @@ class Router
     public static function get($uri, $controller)
     {
         static::$routes['GET'][$uri] = $controller;
+
+//        d(static::$routes['GET']);
     }
 
     public static function post($uri, $controller)

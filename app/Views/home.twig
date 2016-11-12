@@ -49,9 +49,9 @@
                     <div class="a-1">
                     {% for post in posts %}
                         <div class="col-md-6 col-xs-12 abt-left" style="margin-bottom: 3em;">
-                            <a href="/single"><img src="/images/{{ post.photo }}" alt="" /></a>
+                            <a href="/post/{{ post.id }}"><img src="/images/{{ post.photo }}" alt="" /></a>
                             <h6>Find The Most</h6>
-                            <h3><a href="/single">{{ post.title }}</a></h3>
+                            <h3><a href="/post/{{ post.id }}">{{ post.title }}</a></h3>
                             <p>Vivamus interdum diam diam, non faucibus tortor consequat vitae. Proin sit amet augue sed massa pellentesque viverra. Suspendisse iaculis purus eget est pretium aliquam ut sed diam.</p>
                             <label>{{ post.created_at | date("F d, Y") }}</label>
                         </div>
