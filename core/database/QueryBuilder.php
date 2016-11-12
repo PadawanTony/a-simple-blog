@@ -1,4 +1,4 @@
-<?php
+<?php declare(strict_types=1);
 /**
  * @author Antony Kalogeropoulos <anthonykalogeropoulos@gmail.com>
  * @since 10/23/16

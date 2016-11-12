@@ -1,4 +1,6 @@
-<?php namespace Core;
+<?php declare(strict_types=1);
+
+namespace Core;
 
 use Exception;
 use InvalidArgumentException;
@@ -10,38 +12,43 @@ use App\Exceptions\HttpNotFoundException;
  */
 class Router
 {
-    protected $routes = [
+    protected static $routes = [
         'GET'  => [],
         'POST' => []
     ];
 
     public static function load(array $files)
     {
-        $router = new static;
-
-        foreach ($files as $file) {
-            if (!file_exists($path = __DIR__."/../routes/{$file}.php")) {
-                throw new InvalidArgumentException("No such file at {$path}");
-            }
-
-            require $path;
-        }
-
-        return $router;
+        array_walk($files, 'static::loadFile');
     }
 
-    public function direct($uri, $method)
+    /**
+     * @param $file
+     */
+    public static function loadFile ($file)
     {
-        if (array_key_exists($uri, $this->routes[$method])) {
-            return $this->callAction(
-                ...explode('@', $this->routes[$method][$uri])
+        $path = __DIR__ . "/../routes/{$file}.php";
+
+        if (!file_exists($path))
+        {
+            throw new InvalidArgumentException("No such file at {$path}");
+        }
+
+        require $path;
+    }
+
+    public static function direct($uri, $method)
+    {
+        if (array_key_exists($uri, static::$routes[$method])) {
+            return static::callAction(
+                ...explode('@', static::$routes[$method][$uri])
             );
         }
 
         throw new HttpNotFoundException;
     }
 
-    private function callAction($controller, $action)
+    private static function callAction($controller, $action)
     {
         $controller = str_replace('/', '\\', $controller);
         $controller = "App\\Controllers\\{$controller}";
@@ -54,13 +61,13 @@ class Router
         return $controller->$action();
     }
 
-    public function get($uri, $controller)
+    public static function get($uri, $controller)
     {
-        $this->routes['GET'][$uri] = $controller;
+        static::$routes['GET'][$uri] = $controller;
     }
 
-    public function post($uri, $controller)
+    public static function post($uri, $controller)
     {
-        $this->routes['POST'][$uri] = $controller;
+        static::$routes['POST'][$uri] = $controller;
     }
 }
